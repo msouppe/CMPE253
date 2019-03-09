@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-controller="./controllers/controller.py"
+controller0="./controllers/controller.py"
+controller1="./controllers/controller.py"
 observe=1
 rest=1
 
@@ -28,11 +29,15 @@ while [ "$1" != "" ]; do
 done
 
 if [ "$observe" == "1"  ] && [ "$rest" == "1"  ]; then
-	ryu-manager $controller ryu.app.ofctl_rest --observe-links
+	ryu-manager $controller0 ryu.app.ofctl_rest --observe-links
+	ryu-manager $controller1 ryu.app.ofctl_rest --observe-link --ofp-tcp-listen-port 6634
 elif [ "$observe" == "1" ]; then
-	ryu-manager $controller --observe-links
+	ryu-manager $controller0 --observe-links
+	ryu-manager $controller1 --observe-links --ofp-tcp-listen-port 6634
 elif [ "$rest" == "1" ]; then
-	ryu-manager $controller ryu.ap.ofctl_rest
+	ryu-manager $controller0 ryu.ap.ofctl_rest
+	ryu-manager $controller1 ryu.ap.ofctl_rest --ofp-tcp-listen-port 6634
 else
-	ryu-manager $controller
+	ryu-manager $controller0
+	ryu-manager $controller1 --ofp-tcp-listen-port 6634
 fi

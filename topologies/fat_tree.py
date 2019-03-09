@@ -23,6 +23,12 @@ def myNetwork():
                       ip='127.0.0.1',
                       protocol='tcp',
                       port=6633)
+    
+    c1=net.addController(name='c1',
+                      controller=RemoteController,
+                      ip='127.0.0.1',
+                      protocol='tcp',
+                      port=6634)
 
     info( '*** Add switches\n')
     s10 = net.addSwitch('s10', cls=OVSKernelSwitch)
