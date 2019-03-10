@@ -22,7 +22,7 @@ from ryu.lib.packet import packet
 from ryu.lib.packet import ethernet
 from ryu.lib.packet import ether_types
 from ryu import cfg
-
+import os
 
 class SimpleSwitch13(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
@@ -33,8 +33,9 @@ class SimpleSwitch13(app_manager.RyuApp):
         CONF = cfg.CONF
         CONF.register_opts([cfg.IntOpt('paramid_int')])
         print "---------------------> " + str(CONF.paramid_int)
-
-
+	self.controller_id = CONF.paramid_int
+	self.absolute_path = "./controllers/c"+str(self.controller_id)
+	os.spawnl(os.P_NOWAIT, "java -jar "+self.absolute_path+"/server/sdnstore.jar -server "+str(self.controller_id)+" "+self.absolute_path+"/nib.txt &")
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
