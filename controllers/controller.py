@@ -22,20 +22,45 @@ from ryu.lib.packet import packet
 from ryu.lib.packet import ethernet
 from ryu.lib.packet import ether_types
 from ryu import cfg
+
+from threading import Timer
+
+import ryu.app.ofctl.api as ofctl_api
 import os
 
 class SimpleSwitch13(app_manager.RyuApp):
     OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
+
+    def send_role_request(self):       
+        print "***********************************************************"
+        print "Changing Master Controller to c"+str(self.controller_id)
+        print "Listening on port "+ str(self.listen_port)
+        for i in range(1, 21):
+            stri = 's'+str(i)
+            os.popen('ovs-vsctl set-controller ' + stri + ' tcp:127.0.0.1:'+str(self.listen_port))
 
     def __init__(self, *args, **kwargs):
         super(SimpleSwitch13, self).__init__(*args, **kwargs)
         self.mac_to_port = {}
         CONF = cfg.CONF
         CONF.register_opts([cfg.IntOpt('paramid_int')])
+        CONF.register_opts([cfg.IntOpt('listen_port_int')])
+  
         print "---------------------> " + str(CONF.paramid_int)
+        print "---------------------> " + str(CONF.listen_port_int) 
 	self.controller_id = CONF.paramid_int
+        self.listen_port = CONF.listen_port_int
+
 	self.absolute_path = "./controllers/c"+str(self.controller_id)
-	os.spawnl(os.P_NOWAIT, "java -jar "+self.absolute_path+"/server/sdnstore.jar -server "+str(self.controller_id)+" "+self.absolute_path+"/nib.txt &")
+        
+        print "Initializing BFT SMART.....\npid: "
+	print os.spawnl(os.P_NOWAIT, "java -jar "+self.absolute_path+"/server/sdnstore.jar -server "+str(self.controller_id)+" "+self.absolute_path+"/nib.txt &")
+
+        if self.controller_id == 1:
+            print "Controller 1 sending role request...."
+            t = Timer(10, self.send_role_request)
+            t.start()
+
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
