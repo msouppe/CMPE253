@@ -10,6 +10,8 @@ from mininet.log import setLogLevel, info
 from mininet.link import TCLink, Intf
 from subprocess import call
 
+import time
+
 def myNetwork():
 
     net = Mininet( topo=None,
@@ -163,7 +165,10 @@ def myNetwork():
     info( '*** Post configure switches and hosts\n')
 
     #CLI(net)
-    print h1.cmd('ping -c1 %s', h10.IP())
+    start = time.time()
+    print h1.cmd('ping -c1 %s', % h10.IP())
+    end = time.time()
+    print "Time: " + str(end)
     net.stop()
 
 if __name__ == '__main__':

@@ -134,7 +134,7 @@ class SimpleSwitch13(app_manager.RyuApp):
         if not src in self.mac_to_port[str(dpid)]:
             self.logger.info("Adding to dictionary...")
             self.mac_to_port[str(dpid)][str(src)] = in_port
-            self.btf_commit(self.mac_to_port)
+            # self.btf_commit(self.mac_to_port)
             out_port = ofproto.OFPP_FLOOD
             actions = [parser.OFPActionOutput(out_port)]
         else:
