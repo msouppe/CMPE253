@@ -164,6 +164,24 @@ def myNetwork():
 
     info( '*** Post configure switches and hosts\n')
 
+    hosts = []
+    hosts.append(h1)
+    hosts.append(h2)
+    hosts.append(h3)
+    hosts.append(h4)
+    hosts.append(h5)
+    hosts.append(h6)
+    hosts.append(h7)
+    hosts.append(h8)
+    hosts.append(h9)
+    hosts.append(h10)
+    hosts.append(h11)
+    hosts.append(h12)
+    hosts.append(h13)
+    hosts.append(h14)
+    hosts.append(h15)
+    hosts.append(h16)
+
     #CLI(net)
     start = time.time()
     print h1.cmd('ping -c1 %s', % h10.IP())
