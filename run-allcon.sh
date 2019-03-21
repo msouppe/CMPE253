@@ -10,14 +10,14 @@ kill -9 $PID
 
 kill $(ps aux | grep controller | awk '{print $2}') 
 
-controller0="/home/parallels/253proj/CMPE253/controllers/controller.py"
-controller1="/home/parallels/253proj/CMPE253/controllers/controller.py"
-controller2="/home/parallels/253proj/CMPE253/controllers/controller.py"
-controller3="/home/parallels/253proj/CMPE253/controllers/controller.py"
+controller0="/home/pranav/ofworkspace/CMPE253/controllers/controller.py"
+controller1="/home/pranav/ofworkspace/CMPE253/controllers/controller.py"
+controller2="/home/pranav/ofworkspace/CMPE253/controllers/controller.py"
+controller3="/home/pranav/ofworkspace/CMPE253/controllers/controller.py"
 
 ryu_path=/home/parallels/ryu/bin/ryu-manager
-jar_path=/home/parallels/253proj/CMPE253/controllers
-dir=/home/parallels/253proj/CMPE253
+jar_path=/home/pranav/ofworkspace/CMPE253/controllers
+dir=/home/pranav/ofworkspace/CMPE253
 
 observe=1
 rest=1
@@ -45,13 +45,13 @@ while [ "$1" != "" ]; do
 done
 #Starting jar files
 echo "STARTING BFT SMART SERVERS"
-java -jar $jar_path/sdnstore.jar -server 0  /home/parallels/253proj/CMPE253/controllers/c0/nib.txt &
+java -jar $jar_path/sdnstore.jar -server 0  /home/pranav/ofworkspace/CMPE253/controllers/c0/nib.txt &
 sleep 2
-java -jar $jar_path/sdnstore.jar -server 1  /home/parallels/253proj/CMPE253/controllers/c1/nib.txt &
+java -jar $jar_path/sdnstore.jar -server 1  /home/pranav/ofworkspace/CMPE253/controllers/c1/nib.txt &
 sleep 2
-java -jar $jar_path/sdnstore.jar -server 2  /home/parallels/253proj/CMPE253/controllers/c2/nib.txt &
+java -jar $jar_path/sdnstore.jar -server 2  /home/pranav/ofworkspace/CMPE253/controllers/c2/nib.txt &
 sleep 2
-java -jar $jar_path/sdnstore.jar -server 3  /home/parallels/253proj/CMPE253/controllers/c3/nib.txt &
+java -jar $jar_path/sdnstore.jar -server 3  /home/pranav/ofworkspace/CMPE253/controllers/c3/nib.txt &
 sleep 2
 java -jar $jar_path/py4jclient.jar 4 9500 &
 sleep 2
