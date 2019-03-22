@@ -10,8 +10,45 @@ from mininet.log import setLogLevel, info
 from mininet.link import TCLink, Intf
 from subprocess import call
 
-def myNetwork():
+import sys, getopt
+import time
+import random
 
+
+def myNetwork(argv):
+
+    print "Checking Arguments..."
+    try:
+        opts, args = getopt.getopt(argv,"i:o:",["iter=", "ofile="])
+    except:
+        print "Usage: -i <# iterations> -o <path-to-outfile>"
+        print "exiting..."
+        print str(opts)
+        print str(args)
+        sys.exit(2)
+    if len(opts) < 1:
+        print "Usage: -i <# iterations> -o <path-to-outfile>"
+
+    itr = 0
+    f_str = None
+    for opt, arg in opts:
+        print "In for Loop"
+        if opt == "-i":
+            print "I Provided..."
+            itr = arg
+        elif opt == "-o":
+            print "Path Provided..."
+            f_str = arg
+        else:
+            print "Usage: -i <# iterations>"
+            sys.exit(2)
+
+    print "Done..."
+    print "i: " + str(itr)
+    print "File: " + str(f_str)
+    
+    
+    
     net = Mininet( topo=None,
                    build=False,
                    ipBase='10.0.0.0/8',
@@ -161,11 +198,69 @@ def myNetwork():
     net.get('s19').start([c0])
 
     info( '*** Post configure switches and hosts\n')
+    
+    hosts = []
+    hosts.append(h1)
+    hosts.append(h2)
+    hosts.append(h3)
+    hosts.append(h4)
+    hosts.append(h5)
+    hosts.append(h6)
+    hosts.append(h7)
+    hosts.append(h8)
+    hosts.append(h9)
+    hosts.append(h10)
+    hosts.append(h11)
+    hosts.append(h12)
+    hosts.append(h13)
+    hosts.append(h14)
+    hosts.append(h15)
+    hosts.append(h16)
 
-    CLI(net)
+    
+    times = []
+    f = open(f_str, "a")
+    f.write("iterations,time\n")
+    end = 0
+    loss_count = 0
+    fl = 0
+    measure = 0
+    st = 0
+    en = 0
+    prev = -1
+    for k in range(0, int(itr)):
+        print k
+        for i in range(0, k):
+            x = random.choice(hosts)
+            y = random.choice(hosts)
+            if y == x:
+                continue
+            start = time.time()
+            res = net.ping(hosts=[x,y])
+            end = time.time()
+            if res < 1:
+                loss_count += 1
+                fl = 1
+                measure += (end - start)
+                st = time.time()
+            else:
+                fl = 0
+            if prev == 1 and fl == 0:
+                measure += time.time() - st
+            prev = f
+            #end += (time.time() - start)
+        times.append(end)
+        f.write(str(k+1)+","+str(end)+"\n")
+    f.close()
+    print "loss count: " + str(loss_count)
+    print "measure: " + str(measure)
+    #CLI(net)
     net.stop()
+
+    def parse_ping(res):
+        pass
 
 if __name__ == '__main__':
     setLogLevel( 'info' )
-    myNetwork()
+    myNetwork(sys.argv[1:])
 
