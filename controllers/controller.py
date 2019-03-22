@@ -188,7 +188,7 @@ class SimpleSwitch13(app_manager.RyuApp):
             else:
                 pass
 
-        threading.Timer(25.0, self.leader_election, [thread_var, server_id]).start()
+        threading.Timer(0.8, self.leader_election, [thread_var, server_id]).start()
     
     def btf_commit(self, nib):
         #print("Performing BFT commit::::::::::::::::::::::::::::::")
