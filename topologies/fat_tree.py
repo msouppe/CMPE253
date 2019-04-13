@@ -228,6 +228,7 @@ def myNetwork(argv):
     st = 0
     en = 0
     prev = -1
+    total = time.time()
     for k in range(0, int(itr)):
         print k
         for i in range(0, k):
@@ -238,7 +239,7 @@ def myNetwork(argv):
             start = time.time()
             res = net.ping(hosts=[x,y])
             end = time.time()
-            if res < 1:
+            if res > 1:
                 loss_count += 1
                 fl = 1
                 measure += (end - start)
@@ -251,9 +252,11 @@ def myNetwork(argv):
             #end += (time.time() - start)
         times.append(end)
         f.write(str(k+1)+","+str(end)+"\n")
+    endtime_total = time.time()
     f.close()
     print "loss count: " + str(loss_count)
     print "measure: " + str(measure)
+    print ("Total Time: ", endtime_total-total)
     #CLI(net)
     net.stop()
 

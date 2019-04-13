@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/core-0.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/netty-all-4.0.25.Final.jar"/>
+	<classpathentry kind="lib" path="lib/py4j-java-0.10.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.5.8.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-jdk14-1.5.8.jar"/>
+	<classpathentry kind="lib" path="bin /BFT-SMaRt.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
